@@ -83,3 +83,30 @@ func TestStorePointerToStruct(t *testing.T) {
 		t.Fatal("TestStruct.Num is not 2")
 	}
 }
+
+func TestIncrWithInt(t *testing.T) {
+	tc := New()
+	tc.Set("tint", 1)
+	tc.Incr("tint", 2)
+
+	x, found := tc.Get("tint")
+	if !found {
+		t.Error("tint was not found")
+	}
+	if x.(int) != 3 {
+		t.Error("tint is not 3:", x)
+	}
+}
+
+func TestIncrWithNothing(t *testing.T) {
+	tc := New()
+	tc.Incr("tint2", 2)
+
+	x, found := tc.Get("tint2")
+	if !found {
+		t.Error("tint2 was not found")
+	}
+	if x.(int) != 2 {
+		t.Error("tint2 is not 3:", x)
+	}
+}

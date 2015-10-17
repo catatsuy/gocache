@@ -27,3 +27,14 @@ func (c *cache) Set(key string, value interface{}) {
 	c.items[key] = value
 	c.Unlock()
 }
+
+func (c *cache) Incr(key string, n int) {
+	c.Lock()
+	v, found := c.items[key]
+	if found {
+		c.items[key] = v.(int) + n
+	} else {
+		c.items[key] = n
+	}
+	c.Unlock()
+}
